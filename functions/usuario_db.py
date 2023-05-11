@@ -7,5 +7,16 @@ def cadastrar_usuario(conexao, nome, senha):
     
     return True
 
-def listar_usuarios():
-    pass
+def listar_usuarios(conexao):
+    cursor = conexao.cursor()
+    sql = 'select * from usuarios'
+    cursor.execute(sql)
+    return cursor.fetchall()
+
+def autenticar(conexao, usuario, senha):
+    cursor = conexao.cursor()
+    sql = 'select * from usuarios WHERE usuario_name=? and usuario_senha=?'
+    cursor.execute(sql, [
+        usuario, senha
+    ])
+    return cursor.fetchall()
