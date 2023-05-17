@@ -9,7 +9,7 @@ opc = 0
 def main():
     global opc
     while(opc != 4):
-        print("1 - Inserir novo usuário\n2-Listar Usuarios\n3 - Autenticar\n4 - Sair do Sistema")
+        print("1 - Inserir novo usuário\n2-Listar Usuarios\n3 - Autenticar\n4-Deletar\n5 - Buscar Usuario\n6 - Sair do Sistema")
         opc = int(input("Digite a opção: "))
         
         if opc == 1:
@@ -23,10 +23,22 @@ def main():
             usuario = input("Digite usuario: ")
             senha = input("Digite senha: ")
             usuario_autenticado = autenticar(conn, 
-                                             usuario, 
-                                             senha)
+                                             usuario,                         senha)
             print(len(usuario_autenticado) > 0)
         elif opc == 4:
+            id = int(input('Digite id para deletar: '))
+            sql = 'delete from usuarios where usuario_id=?'
+            cursor = conn.cursor()
+            cursor.execute(sql, [id])
+            conn.commit()
+        elif opc == 5:
+            busca_nome = input("Digite nome para buscar: ")
+            sql = 'select * from usuarios where usuario_name LIKE ?'
+            cursor = conn.cursor()
+            cursor.execute(sql, [f'%{busca_nome}%'])
+            usuarios = cursor.fetchall()
+            print(usuarios)
+        elif opc == 6:
             break
 
 main()
