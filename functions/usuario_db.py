@@ -20,3 +20,15 @@ def autenticar(conexao, usuario, senha):
         usuario, senha
     ])
     return cursor.fetchall()
+
+def deletar_usuario(conexao, id):
+    sql = 'delete from usuarios where usuario_id=?'
+    cursor = conexao.cursor()
+    cursor.execute(sql, [id])
+    conexao.commit()
+
+def atualizar_usuario(conexao, novo_nome, id):
+    sql = 'UPDATE usuarios SET usuario_name=? WHERE usuario_id=?'
+    cursor = conexao.cursor()
+    cursor.execute(sql, [novo_nome, id])
+    conexao.commit()
